@@ -31,4 +31,4 @@ jobs:
         with:
           working-directory: ./dolibarr-16.0
           push: true
-          tags: ${ REPO }:${{ steps.vars.outputs.tag }}
+          tags: ${{ REPO }}:${{ steps.vars.outputs.tag }}
