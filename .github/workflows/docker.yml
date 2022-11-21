@@ -20,10 +20,9 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Build and push
-        run: REPOSITORY=$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]') 
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           working-directory: ./dolibarr-16.0
           push: true
-          tags: ${{ REPOSITORY }}:${{ steps.vars.outputs.tag }}
+          tags: ${{ github.repository | tr '[A-Z]' '[a-z] }}:${{ steps.vars.outputs.tag }}
