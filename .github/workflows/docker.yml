@@ -9,12 +9,6 @@ jobs:
   build-docker-images:
     runs-on: ubuntu-latest
     steps:
-      - name: lowercase REPO
-        run: |
-          echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-      - name: use REPO
-        run: | 
-          echo "The value of REPO is: ${REPO}"
       - name: Set output
         id: vars
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
@@ -31,4 +25,4 @@ jobs:
         with:
           working-directory: ./dolibarr-16.0
           push: true
-          tags: ${{ REPO }}:${{ steps.vars.outputs.tag }}
+          tags: ${{ secrets.REPOSITORY_NAME }}:${{ steps.vars.outputs.tag }}

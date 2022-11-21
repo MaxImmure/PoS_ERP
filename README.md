@@ -15,5 +15,6 @@ In your Repository: Settings -> Secrets -> Add Actions
 Add DOCKER_HUB_ACCESS_TOKEN and DOCKER_HUB_USERNAME Secrets
 #### Create our workflow config file
 Create our workflow config file named .github/workflows/docker.yml and add some code
+##### Note: if the repository name isn't lowercase, create a REPOSITORY_NAME Secret and use this instead of the repository_name value
 
 ### Proof of concept für Entwicklung von Modulen/Erweiterungen
