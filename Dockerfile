@@ -66,7 +66,7 @@ RUN apt-get update -y \
 
 ARG SSH_PRIVATE_KEY
 RUN mkdir /root/.ssh/
-RUN echo "${SSH_PRIVATE_KEY} | base64 --decode" > /root/.ssh/id_rsa
+RUN echo "${SSH_PRIVATE_KEY}" | base64 --decode > /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa  
 RUN cat /root/.ssh/id_rsa
 
