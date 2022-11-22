@@ -66,9 +66,9 @@ RUN apt-get update -y \
 
 ARG SSH_PRIVATE_KEY
 RUN mkdir /root/.ssh/
-RUN echo "${SSH_PRIVATE_KEY}" | base64 --decode > /root/.ssh/id_rsa
+RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa  
-RUN cat /root/.ssh/id_rsa
+RUN cat /root/.ssh/id_rsa | base64 --decode
 
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
