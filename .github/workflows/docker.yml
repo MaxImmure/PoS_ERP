@@ -24,6 +24,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           working-directory: ./dolibarr-16.0
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           push: true
           tags: ${{ secrets.REPOSITORY_NAME }}:${{ steps.vars.outputs.tag }}
+          build-args: | 
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
