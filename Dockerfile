@@ -1,6 +1,6 @@
 ARG ARCH=
 
-FROM ${ARCH}php:8.1-apache-buster as intermediate
+FROM ${ARCH}php:8.1-apache-buster as cloner
 
 LABEL maintainer="Maximilian Mörth <if22b190@technikum-wien.at>"
 
@@ -62,9 +62,19 @@ RUN apt-get update -y \
     && mv ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini \
     && rm -rf /var/lib/apt/lists/*
 
+ARG SSH_PRIVATE_KEY
+RUN mkdir /root/.ssh/
+RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+RUN chmod 600 /root/.ssh/id_rsa
+
+RUN touch /root/.ssh/known_hosts
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+
+RUN git clone git@github.com:MaxImmure/PoS_ERP.git
+
 # Get Dolibarr
-COPY --from=intermediate ./dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/
-COPY --from=intermediate ./dolibarr-${DOLI_VERSION}/scripts/ /var/www/
+COPY --from=cloner /dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/
+COPY --from=cloner /dolibarr-${DOLI_VERSION}/scripts/ /var/www/
 RUN ln -s /var/www/html /var/www/htdocs && \
     mkdir -p /var/www/documents && \
     mkdir -p /var/www/html/custom && \
