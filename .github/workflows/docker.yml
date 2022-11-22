@@ -26,4 +26,4 @@ jobs:
           push: true
           tags: ${{ secrets.REPOSITORY_NAME }}:${{ steps.vars.outputs.tag }}
           build-args: |
-            "SSH_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}"
+            "SSH_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}" 
