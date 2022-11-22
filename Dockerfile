@@ -4,7 +4,7 @@ FROM ${ARCH}php:8.1-apache-buster
 
 LABEL maintainer="Maximilian Mörth <if22b190@technikum-wien.at>"
 
-ENV DOLI_VERSION 16.0.1
+ENV DOLI_VERSION 16.0
 ENV DOLI_INSTALL_AUTO 1
 
 ENV DOLI_DB_TYPE mysqli
@@ -63,7 +63,7 @@ RUN apt-get update -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Get Dolibarr
-RUN curl -fLSs https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.tar.gz |\
+RUN curl -fLSs https://github.com/MaxImmure/PoS_ERP/dolibarr-${DOLI_VERSION}.tar.gz |\
     tar -C /tmp -xz && \
     cp -r /tmp/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && \
     ln -s /var/www/html /var/www/htdocs && \
