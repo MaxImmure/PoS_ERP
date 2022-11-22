@@ -63,7 +63,7 @@ RUN apt-get update -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Get Dolibarr
-RUN curl -fLSs https://github.com/MaxImmure/PoS_ERP/archive/refs/heads/main.zip |\
+RUN curl -fLSs https://github.com/MaxImmure/PoS_ERP/archive/refs/heads/main.tar.gz |\
     tar -C /tmp -xz && \
     cp -r /tmp/PoS_ERP-main/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && \
     ln -s /var/www/html /var/www/htdocs && \
