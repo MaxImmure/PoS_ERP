@@ -71,7 +71,7 @@ RUN curl -fLSs https://github.com/MaxImmure/PoS_ERP/archive/refs/heads/main.tar.
     rm -rf /tmp/* && \
     mkdir -p /var/www/documents && \
     mkdir -p /var/www/html/custom && \
-    chown -R www-data:www-data /var/www
+    chown -R www-data:www-data /var/www 
 
 EXPOSE 80
 VOLUME /var/www/documents
