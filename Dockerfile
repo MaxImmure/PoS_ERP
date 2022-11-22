@@ -50,6 +50,7 @@ RUN apt-get update -y \
         default-mysql-client \
         postgresql-client \
         cron \
+        ssh \
     && apt-get autoremove -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) calendar intl mysqli pdo_mysql gd soap zip \
