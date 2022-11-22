@@ -26,4 +26,5 @@ jobs:
           working-directory: ./dolibarr-16.0
           push: true
           tags: ${{ secrets.REPOSITORY_NAME }}:${{ steps.vars.outputs.tag }}
-          build-args: SSH_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}
+          build-args: |
+            "SSH_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}"
