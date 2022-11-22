@@ -24,6 +24,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
+          args: 
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           tags: ${{ secrets.REPOSITORY_NAME }}:${{ steps.vars.outputs.tag }}
           build-args: 
             SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
