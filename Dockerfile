@@ -1,6 +1,6 @@
 ARG ARCH=
 
-FROM ${ARCH}php:8.1-apache-buster
+FROM ${ARCH}php:8.1-apache-buster as intermediate
 
 LABEL maintainer="Maximilian Mörth <if22b190@technikum-wien.at>"
 
@@ -63,12 +63,9 @@ RUN apt-get update -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Get Dolibarr
-RUN curl -fLSs https://github.com/MaxImmure/PoS_ERP/archive/refs/heads/main.tar.gz |\
-    tar -C /tmp -xz && \
-    cp -r /tmp/PoS_ERP-main/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && \
-    ln -s /var/www/html /var/www/htdocs && \
-    cp -r /tmp/PoS_ERP-main/dolibarr-${DOLI_VERSION}/scripts /var/www/ && \
-    rm -rf /tmp/* && \
+COPY --from=intermediate ./dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/
+COPY --from=intermediate ./dolibarr-${DOLI_VERSION}/scripts/ /var/www/
+RUN ln -s /var/www/html /var/www/htdocs && \
     mkdir -p /var/www/documents && \
     mkdir -p /var/www/html/custom && \
     chown -R www-data:www-data /var/www 
