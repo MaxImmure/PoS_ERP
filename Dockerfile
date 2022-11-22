@@ -1,6 +1,6 @@
 ARG ARCH=
 
-FROM ${ARCH}php:8.1-apache-buster as cloner
+FROM ${ARCH}php:8.1-apache-buster
 
 LABEL maintainer="Maximilian Mörth <if22b190@technikum-wien.at>"
 
@@ -70,15 +70,18 @@ RUN chmod 600 /root/.ssh/id_rsa
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
+RUN cd /tmp
 RUN git clone git@github.com:MaxImmure/PoS_ERP.git
 
+
 # Get Dolibarr
-COPY --from=cloner /dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/
-COPY --from=cloner /dolibarr-${DOLI_VERSION}/scripts/ /var/www/
-RUN ln -s /var/www/html /var/www/htdocs && \
+RUN cp -r /tmp/PoS_ERP/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && \
+    ln -s /var/www/html /var/www/htdocs && \
+    cp -r /tmp/PoS_ERP/dolibarr-${DOLI_VERSION}/scripts /var/www/ && \
+    rm -rf /tmp/* && \
     mkdir -p /var/www/documents && \
     mkdir -p /var/www/html/custom && \
-    chown -R www-data:www-data /var/www 
+    chown -R www-data:www-data /var/www
 
 EXPOSE 80
 VOLUME /var/www/documents
