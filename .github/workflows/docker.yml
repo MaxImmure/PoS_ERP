@@ -30,4 +30,4 @@ jobs:
         with:
           push: true
           load: true
-          tags: ${{ secrets.REPOSITORY_NAME }}:${{ steps.vars.outputs.tag }}
+          tags: ${{ secrets.REPOSITORY_NAME }}:latest
