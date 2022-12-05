@@ -78,13 +78,13 @@ RUN cd /tmp
 COPY . .
 
 # Get Dolibarr
-RUN cp -r /tmp/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && \
-    ln -s /var/www/html /var/www/htdocs && \
-    cp -r /tmp/dolibarr-${DOLI_VERSION}/scripts /var/www/ && \
-    rm -rf /tmp/* && \
-    mkdir -p /var/www/documents && \
-    mkdir -p /var/www/html/custom && \
-    chown -R www-data:www-data /var/www
+RUN cp -r /tmp/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/
+RUN ln -s /var/www/html /var/www/htdocs
+RUN cp -r /tmp/dolibarr-${DOLI_VERSION}/scripts /var/www/ 
+RUN rm -rf /tmp/*
+RUN mkdir -p /var/www/documents
+RUN mkdir -p /var/www/html/custom
+RUN chown -R www-data:www-data /var/www
 
 EXPOSE 80
 VOLUME /var/www/documents
