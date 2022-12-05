@@ -75,12 +75,12 @@ RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
 
 RUN cd /tmp
-RUN git clone git@github.com:MaxImmure/PoS_ERP.git
+COPY . .
 
 # Get Dolibarr
-RUN cp -r /tmp/PoS_ERP/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && \
+RUN cp -r /tmp/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && \
     ln -s /var/www/html /var/www/htdocs && \
-    cp -r /tmp/PoS_ERP/dolibarr-${DOLI_VERSION}/scripts /var/www/ && \
+    cp -r /tmp/dolibarr-${DOLI_VERSION}/scripts /var/www/ && \
     rm -rf /tmp/* && \
     mkdir -p /var/www/documents && \
     mkdir -p /var/www/html/custom && \
