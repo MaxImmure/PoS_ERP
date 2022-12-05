@@ -3,9 +3,40 @@
 - Docker
 
 ### Guide für lokal ausführbares Programm
-1. Repository klonen
-2. Command `docker-compose up -d` ausfüheren ([Dolibarr Image](https://hub.docker.com/r/tuxgasy/dolibarr) und [MariaDB Image](https://hub.docker.com/_/mariadb/) werden gedownloaded/aktualisiert und Conaintainer werden gestartet)
-3. http://localhost aufrufen und anmelden (**Credentials** username: admin, pw: admin)
+
+Folgenden Code in einer docker-compose.yml, mittels *docker-compose -up -d*, ausführen
+```yml
+version: "3"
+
+services:
+    database:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: dolibarr
+
+    web:
+        image: if22b190/dolibarr_erp:latest
+        environment:
+            DOLI_DB_HOST: mariadb
+            DOLI_DB_USER: root
+            DOLI_DB_PASSWORD: root
+            DOLI_DB_NAME: dolibarr
+            DOLI_ADMIN_LOGIN: admin
+            DOLI_ADMIN_PASSWORD: admin
+            DOLI_URL_ROOT: 'http://localhost'
+            PHP_INI_DATE_TIMEZONE: 'Europe/Paris'
+        ports:
+            - "80:80"
+        links:
+            - mariadb
+```
+
+
+Ablauf:
+1. Die Images für die Datenbank (MariaDB) und Web (Dolibarr Build Image from Dockerhub, pushed from Github Action) runterladen und laufen lassen
+2. http://localhost aufrufen und anmelden (**Credentials** username: admin, pw: admin)
+3. Das laufende ERP genießen
 
 ### Github Actions for DockerHub
 #### Docker hub - Generate New Access Token 
