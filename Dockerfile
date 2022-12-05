@@ -64,16 +64,6 @@ RUN apt-get update -y \
     && mv ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini \
     && rm -rf /var/lib/apt/lists/*
 
-ARG SSH_PRIVATE_KEY
-RUN mkdir /root/.ssh/
-RUN SSH_PRIV_KEY=${SSH_PRIVATE_KEY}
-RUN echo $SSH_PRIV_KEY > /root/.ssh/id_rsa
-RUN chmod 600 /root/.ssh/id_rsa  
-RUN cat /root/.ssh/id_rsa 
-
-RUN touch /root/.ssh/known_hosts
-RUN ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
-
 COPY . .
 
 # Get Dolibarr
@@ -90,6 +80,6 @@ VOLUME /var/www/documents
 VOLUME /var/www/html/custom
 
 COPY docker-run.sh /usr/local/bin/
-ENTRYPOINT ["/ust/local/bin/docker-run.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-run.sh"]
 
 CMD ["apache2-foreground"]
