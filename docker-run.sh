@@ -242,4 +242,4 @@ if [ "${1#-}" != "$1" ]; then
   set -- apache2-foreground "$@"
 fi
 
-exec "$@"
+exec "apache2-foreground"

@@ -50,8 +50,7 @@ RUN apt-get update -y \
         default-mysql-client \
         postgresql-client \
         cron \
-        ssh \
-        git \
+        ssh  \
     && apt-get autoremove -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) calendar intl mysqli pdo_mysql gd soap zip \
@@ -78,5 +77,3 @@ VOLUME /var/www/html/custom
 COPY docker-run.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/docker-run.sh
 ENTRYPOINT docker-run.sh
-
-CMD ["apache2ctl", "-D", "FOREGROUND"]
