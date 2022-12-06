@@ -79,4 +79,4 @@ COPY docker-run.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/docker-run.sh
 ENTRYPOINT docker-run.sh
 
-CMD ["apache2-foreground"]
+CMD ["apache2ctl", "-D", "FOREGROUND"]
