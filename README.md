@@ -14,11 +14,10 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: dolibarr
-
     web:
         image: if22b190/dolibarr_erp:latest
         environment:
-            DOLI_DB_HOST: mariadb
+            DOLI_DB_HOST: database
             DOLI_DB_USER: root
             DOLI_DB_PASSWORD: root
             DOLI_DB_NAME: dolibarr
@@ -29,7 +28,7 @@ services:
         ports:
             - "80:80"
         links:
-            - mariadb
+            - database
 ```
 
 
