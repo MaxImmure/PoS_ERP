@@ -1,17 +1,17 @@
 # PoS_ERP
-### Technologien:
+### Technologien: 
 - Docker
-    -> Ubuntu mit Apache2-Foreground
-    -> MariaDB (MySQL)
+    - Ubuntu mit Apache2-Foreground
+    - MariaDB (MySQL): V10.10.2
 - GitHub Actions
-    -> YML Files
-    -> Markdowns
-- Dolibarr
-    -> Php
+    - YML Files
+    - Markdowns
+- Dolibarr 16.0
+    - PHP 8.1.13
 
 ### Guide für lokal ausführbares Programm
 
-Folgenden Code in einer docker-compose.yml, mittels *docker-compose -up -d*, ausführen
+Folgenden Code in einer docker-compose.yml, mittels *docker-compose -up -d* (im selben Ordner wie die Datei), ausführen
 ```yml
 version: "3"
 
@@ -47,10 +47,13 @@ Ablauf:
 ### Github Actions for DockerHub
 #### 1. Docker hub - Generate New Access Token 
 https://hub.docker.com/settings/security?generateToken=true
+
 #### 2. Add a GitHub Action (Docker template)
 In your Repository: Settings -> Secrets -> Add Actions
+
 #### 3. Create GitHub Secrets
 Add DOCKER_HUB_ACCESS_TOKEN and DOCKER_HUB_USERNAME Secrets
+
 #### 4. Create our workflow config file
 Create our workflow config file named .github/workflows/docker.yml and add some code
 
@@ -91,12 +94,29 @@ jobs:
 Die Github Action wird bei jedem Push auf die angegebenen branches ausgeführt.
 
 #### 6. Pull only the built dolibarr Container
-Allgemein haben wir in unserer GitHub Action definiert, das es auf *${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.REPOSITORY_NAME }}:latest* gepushed wird.
+Allgemein haben wir in unserer GitHub Action definiert, das es auf *${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.REPOSITORY_NAME }}:latest* gepushed wird.<br />
 In unserem Fall zum testen: if22b190/dolibarr_erp:latest
 
-Somit können wir uns den container holen mit: *docker pull if22b190/dolibarr_erp:latest*
+Somit können wir uns den container holen mit: *docker pull if22b190/dolibarr_erp:latest*<br />
 **_Note:_** Es ist zu empfehlen den Container mit der obrigen docker-compose auszuführen, da automatisch ein weiterer Container mit einer Datenbank gestartet wird.
 
-##### 
-
 ### Proof of concept für Entwicklung von Modulen/Erweiterungen
+#### Create Test Module
+https://wiki.dolibarr.org/index.php?title=Module_development#Create_your_module
+##### Create a Module Descriptor
+###### 1. Create Module Directory
+Erstelle den Ordner (+ Unterordner): htdocs/_myModule_/core/module
+
+###### 2. Copy module descriptor to new directory
+Kopiere den modMyModule.class.php in deinen neuen Ordner. htdocs/modulebuilder/template/core/modules<br />
+Bennene diesen nun in den Zweck des Modules um<br />
+**_Note:_** Name of the file must start with initial 'mod' and end with .class.php
+
+###### 3. Change all modMyModule to the purpose of the Module
+
+###### 4. Set the ID of your Module
+Ändere die ID in folgender Zeile zu einer (nicht reservierten) ID: *$this->numero = 100000*<br />
+**Liste der nicht reservierten IDs:_** https://wiki.dolibarr.org/index.php/List_of_modules_id
+
+##### Test Your Module Descriptor
+Starte Dolibarr und gehe auf die Seite *Setup->module* 
