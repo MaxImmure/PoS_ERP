@@ -1,6 +1,13 @@
 # PoS_ERP
-### Benötigte Technologien:
+### Technologien:
 - Docker
+    -> Ubuntu mit Apache2-Foreground
+    -> MariaDB (MySQL)
+- GitHub Actions
+    -> YML Files
+    -> Markdowns
+- Dolibarr
+    -> Php
 
 ### Guide für lokal ausführbares Programm
 
@@ -38,13 +45,58 @@ Ablauf:
 3. Das laufende ERP genießen
 
 ### Github Actions for DockerHub
-#### Docker hub - Generate New Access Token 
+#### 1. Docker hub - Generate New Access Token 
 https://hub.docker.com/settings/security?generateToken=true
-#### Create GitHub Secrets
+#### 2. Add a GitHub Action (Docker template)
 In your Repository: Settings -> Secrets -> Add Actions
+#### 3. Create GitHub Secrets
 Add DOCKER_HUB_ACCESS_TOKEN and DOCKER_HUB_USERNAME Secrets
-#### Create our workflow config file
+#### 4. Create our workflow config file
 Create our workflow config file named .github/workflows/docker.yml and add some code
-##### Note: if the repository name isn't lowercase, create a REPOSITORY_NAME Secret and use this instead of the repository_name value
+
+```yml
+name: Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-docker-images:
+    name: Push Docker image to (private) Docker Hub
+    runs-on: ubuntu-latest 
+    steps:
+      - 
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - 
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - 
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.REPOSITORY_NAME }}:latest
+```
+
+**_Note:_** if the repository name isn't lowercase, create a REPOSITORY_NAME Secret and use this instead of the repository_name value
+
+#### 5. Testing the GitHub Action
+Die Github Action wird bei jedem Push auf die angegebenen branches ausgeführt.
+
+#### 6. Pull only the built dolibarr Container
+Allgemein haben wir in unserer GitHub Action definiert, das es auf *${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.REPOSITORY_NAME }}:latest* gepushed wird.
+In unserem Fall zum testen: if22b190/dolibarr_erp:latest
+
+Somit können wir uns den container holen mit: *docker pull if22b190/dolibarr_erp:latest*
+**_Note:_** Es ist zu empfehlen den Container mit der obrigen docker-compose auszuführen, da automatisch ein weiterer Container mit einer Datenbank gestartet wird.
+
+##### 
 
 ### Proof of concept für Entwicklung von Modulen/Erweiterungen
