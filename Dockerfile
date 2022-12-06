@@ -64,15 +64,11 @@ RUN apt-get update -y \
     && mv ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini \
     && rm -rf /var/lib/apt/lists/*
 
-COPY . .
-
-# Get Dolibarr
-RUN cp -r dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/
+COPY dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/
 RUN ln -s /var/www/html /var/www/htdocs
-RUN cp -r dolibarr-${DOLI_VERSION}/scripts /var/www/ 
-RUN rm -rf /tmp/*
-RUN mkdir -p /var/www/documents
-RUN mkdir -p /var/www/html/custom
+
+COPY dolibarr-${DOLI_VERSION}/scripts /var/www/
+
 RUN chown -R www-data:www-data /var/www
 
 EXPOSE 80
