@@ -71,13 +71,16 @@ COPY dolibarr-${DOLI_VERSION}/scripts /var/www/
 
 RUN chown -R www-data:www-data /var/www
 
+RUN mkdir -p /var/www/documents
+RUN mkdir -p /var/www/html/custom
+RUN chown -R www-data:www-data /var/www
+
 EXPOSE 80
 VOLUME /var/www/documents
 VOLUME /var/www/html/custom
 
 COPY docker-run.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/docker-run.sh
-
 ENTRYPOINT docker-run.sh
 
-CMD apache2-foreground
+CMD ["apache2-foreground"]
