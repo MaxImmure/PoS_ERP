@@ -67,7 +67,7 @@ RUN apt-get update -y \
 COPY dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/
 RUN ln -s /var/www/html /var/www/htdocs
 
-COPY dolibarr-${DOLI_VERSION}/scripts /var/www/
+COPY dolibarr-${DOLI_VERSION}/scripts/* /var/www/scripts/
 
 RUN chown -R www-data:www-data /var/www
 
