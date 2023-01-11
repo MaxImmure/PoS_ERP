@@ -103,20 +103,11 @@ Somit können wir uns den container holen mit: *docker pull if22b190/dolibarr_er
 ### Proof of concept für Entwicklung von Modulen/Erweiterungen
 #### Create Test Module
 https://wiki.dolibarr.org/index.php?title=Module_development#Create_your_module
-##### Create a Module Descriptor
-###### 1. Create Module Directory
-Erstelle den Ordner (+ Unterordner): htdocs/_myModule_/core/module
-
-###### 2. Copy module descriptor to new directory
-Kopiere den modMyModule.class.php in deinen neuen Ordner. htdocs/modulebuilder/template/core/modules<br />
-Bennene diesen nun in den Zweck des Modules um<br />
-**_Note:_** Name of the file must start with initial 'mod' and end with .class.php
-
-###### 3. Change all modMyModule to the purpose of the Module
-
-###### 4. Set the ID of your Module
-Ändere die ID in folgender Zeile zu einer (nicht reservierten) ID: *$this->numero = 100000*<br />
-**Liste der nicht reservierten IDs:_** https://wiki.dolibarr.org/index.php/List_of_modules_id
-
-##### Test Your Module Descriptor
-Starte Dolibarr und gehe auf die Seite *Setup->module* 
+##### Generate Files from Module Builder (ab Version 9 notwendig)
+1. Aktiviere das Module 'Module Builder' in der Module-Liste
+2. Öffne das ModuleBuilder Menü (Rechts in der oberen Menüleiste, das neue Symbol mit einem Käfer)
+3. Klicke auf neues Module erstellen und fülle Daten wie Name, Autor, Version, etc. des Modules aus
+Das neues Modul befindet sich nun bei 'htdocs/custom/<modulename>/'.
+##### Datenbank zugriff
+Option A: Alle SQL Files und Tables über den ModuleBuilder generieren und verwalten (ModuleBuilder -> <MyMod> -> Objects -> Erzeugen) 
+Option B: SQL Files selbstständig in '<mymodule>/sql' schreiben
