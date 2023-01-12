@@ -108,6 +108,7 @@ https://wiki.dolibarr.org/index.php?title=Module_development#Create_your_module
 2. Öffne das ModuleBuilder Menü (Rechts in der oberen Menüleiste, das neue Symbol mit einem Käfer)
 3. Klicke auf neues Module erstellen und fülle Daten wie Name, Autor, Version, etc. des Modules aus
 Das neues Modul befindet sich nun bei 'htdocs/custom/<modulename>/'.
-##### Datenbank zugriff
-Option A: Alle SQL Files und Tables über den ModuleBuilder generieren und verwalten (ModuleBuilder -> <MyMod> -> Objects -> Erzeugen) 
-Option B: SQL Files selbstständig in '<mymodule>/sql' schreiben
+##### Seite Anpassen
+Option A: '<mymodule>index.php' überschreiben, weches die Startseite des Plugins ist
+Option B: eine neue File erstellen und im Module Descriptor ergänzen (z.B. als Tab der auf die .php file referenziert)
+Immer gilt: im '<mymodule>/admin> befinden sich die Seiten für die Configuration und Readme (About) Page
