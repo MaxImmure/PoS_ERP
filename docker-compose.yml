@@ -21,6 +21,7 @@ services:
             - "3306:3306"
         networks:
             - internal-nw
+            - external-nw
         volumes:
             - mysql-data:/var/lib/mysql
 
