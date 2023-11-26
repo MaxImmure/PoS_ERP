@@ -28,5 +28,6 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.REPOSITORY_NAME }}:18.0.1
+          file: Dockerfile
           context: ./dolibarr-18.0.1
           file: Dockerfile
