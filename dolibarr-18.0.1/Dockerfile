@@ -4,7 +4,7 @@ FROM ${ARCH}php:8.1-apache-buster
 
 LABEL maintainer="Maximilian Mörth <if22b190@technikum-wien.at>"
 
-ENV DOLI_VERSION 16.0
+ENV DOLI_VERSION 18.0.1
 ENV DOLI_INSTALL_AUTO 1
 
 ENV DOLI_DB_TYPE mysqli
@@ -50,8 +50,6 @@ RUN apt-get update -y \
         default-mysql-client \
         postgresql-client \
         cron \
-        ssh \
-        git \
     && apt-get autoremove -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) calendar intl mysqli pdo_mysql gd soap zip \
@@ -64,23 +62,22 @@ RUN apt-get update -y \
     && mv ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini \
     && rm -rf /var/lib/apt/lists/*
 
-COPY dolibarr-${DOLI_VERSION}/htdocs/ /var/www/html/
-RUN ln -s /var/www/html /var/www/htdocs
-
-COPY dolibarr-${DOLI_VERSION}/scripts/ /var/www/scripts/
-
-RUN chown -R www-data:www-data /var/www
-
-RUN mkdir -p /var/www/documents
-RUN mkdir -p /var/www/html/custom
-RUN chown -R www-data:www-data /var/www
+RUN curl -fLSs https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.tar.gz |\
+    tar -C /tmp -xz && \
+    cp -r /tmp/dolibarr-${DOLI_VERSION}/htdocs/* /var/www/html/ && \
+    ln -s /var/www/html /var/www/htdocs && \
+    cp -r /tmp/dolibarr-${DOLI_VERSION}/scripts /var/www/ && \
+    rm -rf /tmp/* && \
+    mkdir -p /var/www/documents && \
+    mkdir -p /var/www/html/custom && \
+    chown -R www-data:www-data /var/www
 
 EXPOSE 80
 VOLUME /var/www/documents
 VOLUME /var/www/html/custom
 
+COPY docker-init.php /var/www/scripts/
 COPY docker-run.sh /usr/local/bin/
-RUN chmod 755 /usr/local/bin/docker-run.sh
 ENTRYPOINT ["docker-run.sh"]
 
 CMD ["apache2-foreground"]

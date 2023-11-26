@@ -3,7 +3,7 @@ name: Publish Docker Image
 on:
   push:
     branches:
-      - main
+      - v18
 
 jobs:
   build-docker-images:
@@ -28,5 +28,5 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.REPOSITORY_NAME }}:18.0.1
-          context: .
+          context: ./dolibarr-18.0.1
           file: Dockerfile
