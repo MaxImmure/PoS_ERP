@@ -21,7 +21,6 @@ services:
             - "3306:3306"
         networks:
             - internal-nw
-            - external-nw
         volumes:
             - mysql-data:/var/lib/mysql
 
@@ -35,7 +34,6 @@ services:
             DOLI_ADMIN_LOGIN: admin
             DOLI_ADMIN_PASSWORD: admin
             DOLI_URL_ROOT: 'http://localhost'
-            DOLI_INSTALL_AUTO: 1
             PHP_INI_DATE_TIMEZONE: 'Europe/Paris'
         volumes:
             - dolibarr-docs:/var/www/documents

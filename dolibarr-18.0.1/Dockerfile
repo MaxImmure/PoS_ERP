@@ -72,12 +72,16 @@ RUN curl -fLSs https://github.com/Dolibarr/dolibarr/archive/${DOLI_VERSION}.tar.
     mkdir -p /var/www/html/custom && \
     chown -R www-data:www-data /var/www
 
+RUN chown -R www-data:www-data /var/www
+
 EXPOSE 80
 VOLUME /var/www/documents
 VOLUME /var/www/html/custom
 
 COPY docker-init.php /var/www/scripts/
 COPY docker-run.sh /usr/local/bin/
+RUN chmod 755 /usr/local/bin/docker-run.sh
+RUN chmod 755 /var/www/scripts/docker-init.php
 ENTRYPOINT ["docker-run.sh"]
 
 CMD ["apache2-foreground"]
