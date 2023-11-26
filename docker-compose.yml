@@ -1,4 +1,4 @@
-version: "5"
+version: "3"
 
 networks:
   internal-nw:
@@ -26,7 +26,7 @@ services:
             - mysql-data:/var/lib/mysql
 
     web:
-        image: if22b190/dolibarr_erp:latest
+        image: if22b190/dolibarr_erp:18.0.1
         environment:
             DOLI_DB_HOST: database
             DOLI_DB_USER: root
