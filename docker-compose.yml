@@ -33,6 +33,8 @@ services:
             DOLI_DB_NAME: dolibarr
             DOLI_ADMIN_LOGIN: admin
             DOLI_ADMIN_PASSWORD: admin
+            DOLI_DECRYPTION_KEY: 'f2a824de9e134b2babaced6b39140a43'
+            DOLI_INSTANCE_UID: '84b5bc91f83b56e458db71e0adac2b62'
             DOLI_URL_ROOT: 'http://localhost'
             PHP_INI_DATE_TIMEZONE: 'Europe/Paris'
         volumes:

@@ -80,6 +80,7 @@ VOLUME /var/www/html/custom
 
 COPY docker-init.php /var/www/scripts/
 COPY docker-run.sh /usr/local/bin/
+COPY api_login.class.php /var/www/htdocs/api/class/
 RUN chmod 755 /usr/local/bin/docker-run.sh
 RUN chmod 755 /var/www/scripts/docker-init.php
 ENTRYPOINT ["docker-run.sh"]

@@ -61,6 +61,8 @@ if [[ ! -f /var/www/html/conf/conf.php ]]; then
 \$dolibarr_main_db_pass='${DOLI_DB_PASSWORD}';
 \$dolibarr_main_db_type='${DOLI_DB_TYPE}';
 \$dolibarr_main_authentication='${DOLI_AUTH}';
+\$dolibarr_main_decrypt_key='${DOLI_DECRYPTION_KEY}';
+\$dolibarr_main_instance_unique_id='${DOLI_INSTANCE_UID}';
 EOF
     if [[ ${DOLI_AUTH} =~ .*ldap.* ]]; then
       echo "[INIT] => update Dolibarr Config with LDAP entries ..."
